@@ -49,7 +49,7 @@ class MFIcon extends StatelessWidget {
     if (_nameCache[fileName] case var name?) return name;
 
     for (final map in kIcons) {
-      final names = map['fileName'] as List<String>? ?? [];
+      final names = map['fileNames'] as List<String>? ?? [];
 
       for (final name in names) {
         if (name.toLowerCase() == fileName.toLowerCase()) {
