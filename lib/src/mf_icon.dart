@@ -53,7 +53,9 @@ class MFIcon extends StatelessWidget {
 
       for (final name in names) {
         if (name.toLowerCase() == fileName.toLowerCase()) {
-          _nameCache[fileName] = map['name'].toString();
+          final icon = map['name'].toString();
+          _nameCache[fileName] = icon;
+          return icon;
         }
       }
     }
