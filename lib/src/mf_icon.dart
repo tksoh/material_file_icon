@@ -72,7 +72,9 @@ class MFIcon extends StatelessWidget {
 
       for (final ext in extensions) {
         if (ext.toLowerCase() == extension.toLowerCase()) {
-          _extCache[extension] = map['name'].toString();
+          final icon = map['name'].toString();
+          _extCache[extension] = icon;
+          return icon;
         }
       }
     }
