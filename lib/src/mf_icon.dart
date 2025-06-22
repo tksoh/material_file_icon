@@ -46,41 +46,42 @@ class MFIcon extends StatelessWidget {
 
   /// Get the media type by file name.
   static String? getTypeByFileName(String fileName) {
-    if (_nameCache[fileName] case var name?) return name;
-
-    for (final map in kIcons) {
-      final names = map['fileNames'] as List<String>? ?? [];
-
-      for (final name in names) {
-        if (name.toLowerCase() == fileName.toLowerCase()) {
-          final icon = map['name'].toString();
-          _nameCache[fileName] = icon;
-          return icon;
-        }
-      }
+    if (_nameCache.isEmpty) {
+      _buildNameCache();
     }
 
-    return null;
+    return _nameCache[fileName.toLowerCase()];
   }
 
   static final _extCache = <String, String>{};
 
   /// Get the media type by file extension.
   static String? getTypeByExtension(String extension) {
-    if (_extCache[extension] case var name?) return name;
+    if (_extCache.isEmpty) {
+      _buildExtCache();
+    }
 
+    return _extCache[extension.toLowerCase()];
+  }
+
+  /// prefill cache to speed up lookup
+  static void _buildNameCache() {
+    for (final map in kIcons) {
+      final names = map['fileNames'] as List<String>? ?? [];
+      for (final name in names) {
+        _nameCache[name.toLowerCase()] = map['name'].toString();
+      }
+    }
+  }
+
+  /// prefill cache to speed up lookup
+  static void _buildExtCache() {
     for (final map in kIcons) {
       final extensions = map['fileExtensions'] as List<String>? ?? [];
 
       for (final ext in extensions) {
-        if (ext.toLowerCase() == extension.toLowerCase()) {
-          final icon = map['name'].toString();
-          _extCache[extension] = icon;
-          return icon;
-        }
+        _extCache[ext.toLowerCase()] = map['name'].toString();
       }
     }
-
-    return null;
   }
 }
