@@ -67,9 +67,10 @@ class MFIcon extends StatelessWidget {
   /// prefill cache to speed up lookup
   static void _buildNameCache() {
     for (final map in kIcons) {
+      final icon = map['name'].toString();
       final names = map['fileNames'] as List<String>? ?? [];
       for (final name in names) {
-        _nameCache[name.toLowerCase()] = map['name'].toString();
+        _nameCache[name.toLowerCase()] = icon;
       }
     }
   }
@@ -77,10 +78,10 @@ class MFIcon extends StatelessWidget {
   /// prefill cache to speed up lookup
   static void _buildExtCache() {
     for (final map in kIcons) {
+      final icon = map['name'].toString();
       final extensions = map['fileExtensions'] as List<String>? ?? [];
-
       for (final ext in extensions) {
-        _extCache[ext.toLowerCase()] = map['name'].toString();
+        _extCache[ext.toLowerCase()] = icon;
       }
     }
   }
