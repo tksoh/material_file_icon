@@ -11,16 +11,30 @@ class MFIcon extends StatelessWidget {
     this.size,
     this.color,
     this.placeholder = const Icon(Icons.insert_drive_file),
+    this.builder,
   });
+
   final String fileName;
   final double? size;
   final Color? color;
   final Widget placeholder;
+  final Widget Function(String? name, Widget Function() mficon)? builder;
 
   @override
   Widget build(BuildContext context) {
     final mediaType = getType(fileName);
-    if (mediaType == null) return placeholder;
+
+    if (builder != null) {
+      return builder!.call(mediaType, () => _internalIconBuilder(mediaType));
+    } else {
+      return _internalIconBuilder(mediaType);
+    }
+  }
+
+  Widget _internalIconBuilder(String? mediaType) {
+    if (mediaType == null) {
+      return placeholder;
+    }
 
     final cf = color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null;
     return SvgPicture.asset(
